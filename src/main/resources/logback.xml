@@ -31,7 +31,7 @@
     </appender>
 
     <!-- Loggers -->
-    <logger name="Application" level="${APP.LEVEL:-DEBUG}" additivity="FALSE">
+    <logger name="PingPongBot" level="${APP.LEVEL:-DEBUG}" additivity="FALSE">
         <appender-ref ref="STDOUT"/>
         <appender-ref ref="STDERR"/>
         <appender-ref ref="FILE"/>

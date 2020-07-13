@@ -15,7 +15,7 @@
         <lombok.version>1.18.12</lombok.version>
         <logback-classic.version>1.2.3</logback-classic.version>
 
-        <jda.version>1.2.2_139</jda.version>
+        <jda.version>4.2.0_177</jda.version>
         <!--plugin-->
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
     </properties>
@@ -36,8 +36,7 @@
         <dependency>
             <groupId>net.dv8tion</groupId>
             <artifactId>JDA</artifactId>
-            <version>4.2.0_177</version>
-            <type>pom</type>
+            <version>${jda.version}</version>
         </dependency>
     </dependencies>
 

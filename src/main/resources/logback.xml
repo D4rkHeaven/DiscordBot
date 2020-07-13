@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!-- Properties -->
+    <property name="LOG.DIR" value="logs"/>
+    <property name="LOG.NAME" value="log"/>
+    <property name="ROOT.LEVEL" value="TRACE"/>
+    <property name="APP.LEVEL" value="TRACE"/>
+    <property name="FILE.LEVEL" value="TRACE"/>
+
+    <timestamp key="TIMESTAMP" datePattern="yyyy-MM-dd"/>
+
+    <!-- Appenders -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%highlight(%d) [%t] %highlight(%-5level) %logger{36} - %msg%n</pattern>
+        </layout>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG.DIR}/${LOG.NAME}-${TIMESTAMP}.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d %-5level [%t] %logger{36} - %msg%n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG.DIR}/.%d{yyyy-MM-dd}.%i.${LOG.NAME}.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+    </appender>
+
+    <!-- Loggers -->
+    <logger name="Application" level="${APP.LEVEL:-DEBUG}" additivity="FALSE">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="STDERR"/>
+        <appender-ref ref="FILE"/>
+    </logger>
+
+    <root level="${ROOT.LEVEL:-OFF}">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="STDERR"/>
+    </root>
+
+</configuration>

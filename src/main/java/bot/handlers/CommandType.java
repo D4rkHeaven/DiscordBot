@@ -1,4 +1,4 @@
-package handlers;
+package bot.handlers;
 
 public enum CommandType {
     HELP,

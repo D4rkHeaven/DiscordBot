@@ -1,7 +1,7 @@
-package handlers;
+package bot.handlers;
 
-import commands.About;
-import exceptions.InvalidParameterException;
+import bot.commands.About;
+import bot.exceptions.InvalidParameterException;
 
 public class AboutHandler implements CommandHandler {
 

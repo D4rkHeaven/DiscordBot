@@ -1,4 +1,7 @@
-import exceptions.TrainingBotException;
+package bot;
+
+import bot.exceptions.TrainingBotException;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
@@ -11,8 +14,9 @@ import javax.security.auth.login.LoginException;
 
 @Slf4j
 public class TrainingBot extends ListenerAdapter {
-
+    @Setter
     private boolean debugMode = false;
+
     Filter filter = new Filter(this);
 
     public static void main(String[] args) throws LoginException {
@@ -32,7 +36,9 @@ public class TrainingBot extends ListenerAdapter {
             MessageChannel channel = event.getChannel();
             try {
                 String answer = filter.execute(event);
-                if (!answer.trim().isEmpty()) channel.sendMessage(answer).submit();
+                if (!answer.trim().isEmpty()) {
+                    channel.sendMessage(answer).submit();
+                }
             } catch (TrainingBotException e) {
                 log.warn("Exception: ", e);
                 if (debugMode) {

@@ -1,6 +1,8 @@
-import commands.About;
-import exceptions.InvalidCommandException;
-import handlers.*;
+package bot;
+
+import bot.commands.About;
+import bot.exceptions.InvalidCommandException;
+import bot.handlers.*;
 import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
@@ -30,7 +32,7 @@ public class Filter {
         commandType.put("!help", CommandType.HELP);
         commandType.put("!profile", CommandType.PROFILE);
         handlerType.put(CommandType.ABOUT, new AboutHandler(new About()));
-        handlerType.put(CommandType.DEBUG, new DebugHandler());
+        handlerType.put(CommandType.DEBUG, new DebugHandler(bot));
         handlerType.put(CommandType.HELP, new HelpHandler());
         handlerType.put(CommandType.PROFILE, new ProfileHandler());
     }
@@ -45,7 +47,11 @@ public class Filter {
         Scanner scanner = new Scanner(rawMessage);
         CommandType commandType = this.commandType.get(scanner.next());
         if (commandType == null) {
+            log.warn("Invalid command");
             throw new InvalidCommandException("Invalid command");
+        }
+        if (commandType == CommandType.PROFILE) {
+            handlerType.put(CommandType.PROFILE, new ProfileHandler(event.getAuthor()));
         }
         return handlerType.get(commandType).execute(rawMessage);
     }

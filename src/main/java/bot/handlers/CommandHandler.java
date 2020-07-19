@@ -1,9 +1,9 @@
-package handlers;
+package bot.handlers;
 
-import exceptions.InvalidParameterException;
+import bot.exceptions.InvalidParameterException;
 
 /**
- * Interface for command handlers
+ * Interface for command bot.handlers
  */
 public interface CommandHandler {
     /**

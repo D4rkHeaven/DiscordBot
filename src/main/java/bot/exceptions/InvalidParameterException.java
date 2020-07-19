@@ -1,4 +1,4 @@
-package exceptions;
+package bot.exceptions;
 
 /**
  * This exception thrown when the user enters an invalid parameter

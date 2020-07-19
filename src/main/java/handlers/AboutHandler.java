@@ -1,10 +1,15 @@
 package handlers;
 
-import exceptions.InvalidCommandException;
+import commands.About;
+import exceptions.InvalidParameterException;
 
 public class AboutHandler implements CommandHandler {
-        @Override
-        public String execute(String command) throws InvalidCommandException {
-            return "stab";
-        }
+
+    public AboutHandler(About about) {
+    }
+
+    @Override
+    public String execute(String command) throws InvalidParameterException {
+        return "Training bot";
+    }
 }

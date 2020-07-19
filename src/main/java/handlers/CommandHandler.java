@@ -1,6 +1,6 @@
 package handlers;
 
-import exceptions.InvalidCommandException;
+import exceptions.InvalidParameterException;
 
 /**
  * Interface for command handlers
@@ -10,7 +10,7 @@ public interface CommandHandler {
      * Handle input command
      * @param command from user
      * @return reply for user
-     * @throws InvalidCommandException when user inputs invalid command
+     * @throws InvalidParameterException when command contains invalid parameter
      */
-    String execute(String command) throws InvalidCommandException;
+    String execute(String command) throws InvalidParameterException;
 }

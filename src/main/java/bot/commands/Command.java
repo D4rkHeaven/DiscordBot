@@ -8,7 +8,7 @@ import net.dv8tion.jda.api.entities.MessageEmbed;
  * Superclass of training bot commands
  */
 @Data
-public class Command {
+public abstract class Command {
     MessageEmbed answer;
     MessageChannel targetChannel;
 }

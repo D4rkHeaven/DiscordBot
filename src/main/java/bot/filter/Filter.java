@@ -1,9 +1,9 @@
 package bot.filter;
 
-import bot.TrainingBot;
 import bot.commands.Command;
 import bot.exceptions.InvalidCommandException;
 import bot.handlers.CommandHandler;
+import bot.listeners.MessageListener;
 import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
@@ -20,18 +20,15 @@ public class Filter {
 
     private static final Map<String, Class<? extends CommandHandler<? extends Command>>> handlerType = new HashMap<>();
     private Pattern pattern;
-    TrainingBot bot;
+    MessageListener listener;
 
     static {
-        Arrays.stream(CommandType.values()).forEach(commandType -> {
-            handlerType.put(commandType.getCommandName(), commandType.getCommandHandler());
-        });
+        Arrays.stream(CommandType.values()).forEach(commandType -> handlerType.put(commandType.getCommandName(), commandType.getCommandHandler()));
     }
 
-    public Filter(TrainingBot trainingBot) {
-        this.bot = trainingBot;
+    public Filter(MessageListener listener) {
+        this.listener = listener;
         pattern = Pattern.compile("^(!).*");
-
     }
 
     public boolean isCommand(String message) {
@@ -48,8 +45,8 @@ public class Filter {
             log.warn("Invalid command");
             throw new InvalidCommandException("Invalid command");
         }
-        CommandHandler<? extends Command> commandHandler = commandClass.getDeclaredConstructor(TrainingBot.class).newInstance(bot);
-        Command command = commandHandler.generateCommand(event, bot);
+        CommandHandler<? extends Command> commandHandler = commandClass.getDeclaredConstructor(MessageListener.class).newInstance(listener);
+        Command command = commandHandler.generateCommand(event, listener);
         commandHandler.execute(command);
     }
 }

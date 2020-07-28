@@ -1,23 +1,22 @@
 package bot.handlers;
 
-import bot.TrainingBot;
 import bot.commands.Command;
 import bot.commands.Help;
+import bot.listeners.MessageListener;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class HelpHandler implements CommandHandler<Help> {
 
-    TrainingBot bot;
+    MessageListener listener;
 
-    public HelpHandler(TrainingBot bot) {
-        this.bot = bot;
+    public HelpHandler(MessageListener listener) {
+        this.listener = listener;
     }
 
-
     @Override
-    public Help generateCommand(MessageReceivedEvent message, TrainingBot bot) {
+    public Help generateCommand(MessageReceivedEvent message, MessageListener listener) {
         Help helpCommand = new Help();
         helpCommand.setTargetChannel(message.getChannel());
         helpCommand.setAnswer(generateEmbed());

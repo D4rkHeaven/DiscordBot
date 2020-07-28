@@ -1,22 +1,23 @@
 package bot.handlers;
 
-import bot.TrainingBot;
 import bot.commands.Command;
 import bot.commands.Profile;
+import bot.listeners.MessageListener;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class ProfileHandler implements CommandHandler<Profile> {
-    TrainingBot bot;
+    
+    MessageListener listener;
 
-    public ProfileHandler(TrainingBot bot) {
-        this.bot = bot;
+    public ProfileHandler(MessageListener listener) {
+        this.listener = listener;
     }
 
     @Override
-    public Profile generateCommand(MessageReceivedEvent message, TrainingBot bot) {
+    public Profile generateCommand(MessageReceivedEvent message, MessageListener listener) {
         Profile profileCommand = new Profile();
         profileCommand.setTargetChannel(message.getChannel());
         profileCommand.setAnswer(generateEmbed(message));

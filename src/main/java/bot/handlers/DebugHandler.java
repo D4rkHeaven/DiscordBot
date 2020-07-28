@@ -5,7 +5,6 @@ import bot.commands.Debug;
 import bot.exceptions.InvalidParameterException;
 import bot.listeners.MessageListener;
 import lombok.extern.slf4j.Slf4j;
-import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 import java.util.Arrays;
@@ -28,20 +27,16 @@ public class DebugHandler implements CommandHandler<Debug> {
                 .skip(1)
                 .toArray(String[]::new);
 
-        Debug debugCommand = new Debug();
-        debugCommand.setTargetChannel(message.getChannel());
-        EmbedBuilder embed = new EmbedBuilder();
-
         if (commandArgs[0].equals("on")) {
             listener.setDebugMode(true);
-            debugCommand.setMode(true);
-            debugCommand.setAnswer(embed.setDescription("Debug mod enabled").build());
+            Debug debugCommand = new Debug(true);
+            debugCommand.setTargetChannel(message.getChannel());
             log.info("Debug mod enabled");
             return debugCommand;
         } else if (commandArgs[0].equals("off")) {
             listener.setDebugMode(false);
-            debugCommand.setMode(false);
-            debugCommand.setAnswer(embed.setDescription("Debug mod disabled").build());
+            Debug debugCommand = new Debug(false);
+            debugCommand.setTargetChannel(message.getChannel());
             log.info("Debug mod disabled");
             return debugCommand;
         } else {

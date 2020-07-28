@@ -1,16 +1,19 @@
 package bot.handlers;
 
-import bot.exceptions.InvalidParameterException;
+import bot.TrainingBot;
+import bot.commands.Command;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 /**
- * Interface for command bot.handlers
+ * Interface for command handlers
  */
-public interface CommandHandler {
+public interface CommandHandler<T extends Command> {
     /**
-     * Handle input command
-     * @param command from user
-     * @return reply for user
-     * @throws InvalidParameterException when command contains invalid parameter
+     * Handler for commands
+     * @param event - event received by bot
+     * @param bot - current bot
      */
-    String execute(String command) throws InvalidParameterException;
+    T generateCommand(MessageReceivedEvent event, TrainingBot bot);
+
+    void execute(Command command);
 }

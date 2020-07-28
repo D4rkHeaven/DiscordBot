@@ -1,5 +1,8 @@
 package bot.commands;
 
+import lombok.Data;
+
+@Data
 public class Debug extends Command {
-    private String firstParameter;
+    private Boolean mode;
 }

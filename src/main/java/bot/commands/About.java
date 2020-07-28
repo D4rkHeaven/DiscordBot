@@ -1,5 +1,7 @@
 package bot.commands;
 
-public class About extends Command {
+import lombok.Data;
 
+@Data
+public class About extends Command {
 }

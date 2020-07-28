@@ -3,8 +3,6 @@ package bot.handlers;
 import bot.commands.About;
 import bot.commands.Command;
 import bot.listeners.MessageListener;
-import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class AboutHandler implements CommandHandler<About> {
@@ -19,19 +17,11 @@ public class AboutHandler implements CommandHandler<About> {
     public About generateCommand(MessageReceivedEvent message, MessageListener listener) {
         About aboutCommand = new About();
         aboutCommand.setTargetChannel(message.getChannel());
-        aboutCommand.setAnswer(generateEmbed());
         return aboutCommand;
     }
 
     @Override
     public void execute(Command command) {
         command.getTargetChannel().sendMessage(command.getAnswer()).submit();
-    }
-
-    private MessageEmbed generateEmbed() {
-        EmbedBuilder embed = new EmbedBuilder()
-                .setTitle("Training bot", "https://github.com/D4rkHeaven/DiscordBot")
-                .setDescription("Bot for practice in Java");
-        return embed.build();
     }
 }

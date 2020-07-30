@@ -1,4 +1,4 @@
-package bot.filter;
+package bot.utils;
 
 import bot.commands.Command;
 import bot.handlers.*;

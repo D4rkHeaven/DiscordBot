@@ -1,4 +1,4 @@
-package bot.filter;
+package bot.utils;
 
 import bot.commands.Command;
 import bot.exceptions.InvalidCommandException;
@@ -9,6 +9,7 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -20,7 +21,7 @@ public class Filter {
 
     private static final Map<String, Class<? extends CommandHandler<? extends Command>>> handlerType = new HashMap<>();
     private Pattern pattern;
-    MessageListener listener;
+    private MessageListener listener;
 
     static {
         Arrays.stream(CommandType.values()).forEach(commandType -> handlerType.put(commandType.getCommandName(), commandType.getCommandHandler()));
@@ -39,7 +40,7 @@ public class Filter {
         String rawMessage = event.getMessage().getContentRaw().trim();
         log.info("Bot received message: {}", event.getMessage().toString());
 
-        String coreCommand = rawMessage.split("\\s")[0].toLowerCase();
+        String coreCommand = rawMessage.split("\\s")[0].toLowerCase(Locale.ENGLISH);
         Class<? extends CommandHandler<? extends Command>> commandClass = handlerType.get(coreCommand);
         if (commandClass == null) {
             log.warn("Invalid command");

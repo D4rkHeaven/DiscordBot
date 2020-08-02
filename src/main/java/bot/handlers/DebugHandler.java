@@ -10,7 +10,7 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import java.util.Arrays;
 
 @Slf4j
-public class DebugHandler implements CommandHandler<Debug> {
+public class DebugHandler implements SettingHandler<Debug> {
 
     MessageListener listener;
 

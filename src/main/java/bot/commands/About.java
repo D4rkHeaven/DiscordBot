@@ -1,9 +1,7 @@
 package bot.commands;
 
-import lombok.Data;
 import net.dv8tion.jda.api.EmbedBuilder;
 
-@Data
 public class About extends InfoCommand {
 
     public About (){

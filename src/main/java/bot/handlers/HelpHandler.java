@@ -5,7 +5,7 @@ import bot.commands.Help;
 import bot.listeners.MessageListener;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
-public class HelpHandler implements CommandHandler<Help> {
+public class HelpHandler implements InfoHandler<Help> {
 
     MessageListener listener;
 

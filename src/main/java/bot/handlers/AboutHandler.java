@@ -5,7 +5,7 @@ import bot.commands.Command;
 import bot.listeners.MessageListener;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
-public class AboutHandler implements CommandHandler<About> {
+public class AboutHandler implements InfoHandler<About> {
 
     MessageListener listener;
 

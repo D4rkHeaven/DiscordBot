@@ -9,11 +9,17 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
  */
 public interface CommandHandler<T extends Command> {
     /**
-     * Handler for commands
-     * @param event - event received by bot
+     * Generate command based on event and listener
+     *
+     * @param event    - event received by bot
      * @param listener - current bot listener
      */
     T generateCommand(MessageReceivedEvent event, MessageListener listener);
 
+    /**
+     * Execute command
+     *
+     * @param command executable command
+     */
     void execute(Command command);
 }

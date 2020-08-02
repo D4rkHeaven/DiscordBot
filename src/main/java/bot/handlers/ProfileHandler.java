@@ -6,7 +6,7 @@ import bot.listeners.MessageListener;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
-public class ProfileHandler implements CommandHandler<Profile> {
+public class ProfileHandler implements InfoHandler<Profile> {
 
     MessageListener listener;
 

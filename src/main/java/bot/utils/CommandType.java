@@ -9,7 +9,8 @@ public enum CommandType {
     HELP("!help",HelpHandler.class),
     ABOUT("!about",AboutHandler.class),
     DEBUG("!debug",DebugHandler.class),
-    PROFILE("!profile",ProfileHandler.class);
+    PROFILE("!profile",ProfileHandler.class),
+    CREATE("!create",CreateHandler.class);
 
     public String commandName;
     private Class<? extends CommandHandler<? extends Command>> commandHandler;

@@ -12,7 +12,7 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import javax.annotation.Nonnull;
 
 /**
- * Main listener for bot
+ * Listens message channels events
  */
 @Slf4j
 public class MessageListener extends ListenerAdapter {
@@ -30,7 +30,7 @@ public class MessageListener extends ListenerAdapter {
     }
 
     /**
-     * Check past events after bot startup
+     * Checks past events after bot startup
      *
      * @param event bot startup
      */
@@ -41,7 +41,7 @@ public class MessageListener extends ListenerAdapter {
     }
 
     /**
-     * Listen new messages
+     * Triggers after receiving new message
      *
      * @param event new message
      */

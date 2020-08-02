@@ -18,7 +18,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * Delete messages containing words from file "censor.txt" in resources package
+ * Deletes messages containing bad words
  */
 @Slf4j
 public class CensorshipFilter {
@@ -32,6 +32,7 @@ public class CensorshipFilter {
 
     /**
      * Clear past messages after bot startup
+     *
      * @param event bot startup
      */
     public void censoring(ReadyEvent event) {
@@ -52,14 +53,20 @@ public class CensorshipFilter {
         }
     }
 
+    /**
+     * Checks string for bad words
+     *
+     * @param message input string
+     * @return boolean result
+     */
     public boolean hasBadWords(final String message) {
         return badWords.stream().anyMatch(message::contains);
     }
 
     /**
-     * Parse censor.txt to set of strings
+     * Parse "censor.txt" in resources package to set of strings
      */
-    private void getBadWords(){
+    private void getBadWords() {
         try (BufferedReader reader = new BufferedReader(
                 new InputStreamReader(new FileInputStream("src/main/resources/censor.txt"), StandardCharsets.UTF_8))) {
             String word;

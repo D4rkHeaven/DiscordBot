@@ -36,6 +36,12 @@ public class Filter {
         return pattern.matcher(message).matches();
     }
 
+    /**
+     * Parses message to generate and execute commands
+     *
+     * @param event received message
+     * @throws Exception if command didn't recognized
+     */
     public void execute(MessageReceivedEvent event) throws Exception {
         String rawMessage = event.getMessage().getContentRaw().trim();
         log.info("Bot received message: {}", event.getMessage().toString());

@@ -5,6 +5,11 @@ import bot.commands.SettingCommand;
 import bot.listeners.MessageListener;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
+/**
+ * Interface for setting command handlers
+ *
+ * @param <T>
+ */
 public interface SettingHandler<T extends SettingCommand> extends CommandHandler<SettingCommand> {
 
     @Override

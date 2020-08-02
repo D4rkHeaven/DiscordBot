@@ -5,6 +5,11 @@ import bot.commands.InfoCommand;
 import bot.listeners.MessageListener;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
+/**
+ * Interface for info command handlers
+ *
+ * @param <T>
+ */
 public interface InfoHandler<T extends InfoCommand> extends CommandHandler<InfoCommand> {
 
     @Override

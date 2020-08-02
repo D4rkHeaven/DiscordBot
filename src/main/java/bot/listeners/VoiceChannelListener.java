@@ -17,6 +17,9 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
 
+/**
+ * Listens voice channels events
+ */
 @Slf4j
 public class VoiceChannelListener extends ListenerAdapter implements Runnable {
 
@@ -34,7 +37,7 @@ public class VoiceChannelListener extends ListenerAdapter implements Runnable {
     }
 
     /**
-     * Check past events after bot startup
+     * Checks past events after bot startup
      *
      * @param event bot startup
      */
@@ -94,7 +97,7 @@ public class VoiceChannelListener extends ListenerAdapter implements Runnable {
     }
 
     /**
-     * Try to create voice channel if guild doesn't have empty one
+     * Creates voice channel if guild doesn't have empty one
      */
     private void createVoiceChannel() {
         assert dynamicVoiceChannels != null;

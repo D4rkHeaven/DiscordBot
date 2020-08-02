@@ -1,7 +1,7 @@
 package bot.exceptions;
 
 /**
- * Superclass of training bot bot.exceptions
+ * Superclass of training bot exceptions
  */
 public class TrainingBotException extends RuntimeException {
     public TrainingBotException(String message) {

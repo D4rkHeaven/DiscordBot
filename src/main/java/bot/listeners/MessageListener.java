@@ -17,7 +17,7 @@ import javax.annotation.Nonnull;
 @Slf4j
 public class MessageListener extends ListenerAdapter {
     @Getter
-    private static final long GUILD_ID = 732199841819787315L;
+    private static final long BOT_ID = 732151740379693076L;
     @Setter
     private boolean debugMode;
     private CensorshipFilter censorshipFilter;

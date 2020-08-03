@@ -5,7 +5,6 @@ import bot.listeners.VoiceChannelListener;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import net.dv8tion.jda.api.requests.GatewayIntent;
 
 import javax.security.auth.login.LoginException;
 
@@ -18,7 +17,7 @@ public class TrainingBot extends ListenerAdapter {
             System.out.println("You have to provide a token as first argument!");
             System.exit(1);
         }
-        JDABuilder.createLight(args[0], GatewayIntent.GUILD_MESSAGES, GatewayIntent.DIRECT_MESSAGES)
+        JDABuilder.createDefault(args[0])
                 .addEventListeners(new MessageListener(), new VoiceChannelListener())
                 .setActivity(Activity.listening("!help"))
                 .build();

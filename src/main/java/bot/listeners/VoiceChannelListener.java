@@ -24,7 +24,7 @@ import java.util.function.Predicate;
 public class VoiceChannelListener extends ListenerAdapter implements Runnable {
 
     @Getter
-    private static final long GUILD_ID = 732199841819787315L;
+    private static final long GUILD_ID = 731154486176907289L;
 
     VoiceChannel voiceChannel;
     private Category dynamicVoiceChannels;
@@ -67,6 +67,7 @@ public class VoiceChannelListener extends ListenerAdapter implements Runnable {
 
     @Override
     public void onGuildVoiceJoin(@Nonnull GuildVoiceJoinEvent event) {
+        log.warn("test");
         createVoiceChannel();
     }
 
@@ -77,6 +78,9 @@ public class VoiceChannelListener extends ListenerAdapter implements Runnable {
         thread.start();
     }
 
+    /**
+     * Closes voice channel after 1 minute if all members left
+     */
     @Override
     public void run() {
         Runnable task = () -> {
@@ -97,13 +101,12 @@ public class VoiceChannelListener extends ListenerAdapter implements Runnable {
     }
 
     /**
-     * Creates voice channel if guild doesn't have empty one
+     * Creates voice channel if guild category doesn't have empty one
      */
     private void createVoiceChannel() {
         assert dynamicVoiceChannels != null;
-        int voiceChannelCount = dynamicVoiceChannels.getVoiceChannels().size();
         if (dynamicVoiceChannels.getVoiceChannels().stream().noneMatch(voiceChannel -> voiceChannel.getMembers().size() == 0)) {
-            dynamicVoiceChannels.createVoiceChannel("Channel " + (voiceChannelCount + 1)).submit();
+            dynamicVoiceChannels.createVoiceChannel("Channel").submit();
         }
     }
 }

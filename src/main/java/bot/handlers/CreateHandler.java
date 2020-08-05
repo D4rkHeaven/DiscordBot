@@ -79,7 +79,6 @@ public class CreateHandler implements SettingHandler<Create> {
                     answer.setDescription("Created channel " + channel);
                 }
             }
-
         } catch (Exception e) {
             answer.setDescription(e.toString());
         } finally {

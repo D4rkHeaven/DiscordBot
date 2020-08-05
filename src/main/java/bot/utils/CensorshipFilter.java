@@ -36,7 +36,7 @@ public class CensorshipFilter {
      * @param event bot startup
      */
     public void censoring(ReadyEvent event) {
-        TextChannel textChannel = event.getJDA().getTextChannelById(MessageListener.getBOT_ID());
+        TextChannel textChannel = event.getJDA().getTextChannelById(MessageListener.getCHAT_ID());
         StringBuilder censor = new StringBuilder();
         assert textChannel != null;
         Map<User, List<Message>> userListMap = textChannel

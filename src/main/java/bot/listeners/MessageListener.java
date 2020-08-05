@@ -1,6 +1,7 @@
 package bot.listeners;
 
 import bot.utils.CensorshipFilter;
+import bot.utils.ExpSystem;
 import bot.utils.Filter;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,26 +19,31 @@ import javax.annotation.Nonnull;
 public class MessageListener extends ListenerAdapter {
     @Getter
     private static final long BOT_ID = 732151740379693076L;
+    @Getter
+    private static final long CHAT_ID = 732199841819787315L;
     @Setter
     private boolean debugMode;
     private CensorshipFilter censorshipFilter;
     private Filter filter;
+    public ExpSystem expSystem;
 
     public MessageListener() {
         debugMode = false;
         censorshipFilter = new CensorshipFilter();
         filter = new Filter(this);
+        expSystem = new ExpSystem();
     }
 
     /**
      * Checks past events after bot startup
      *
-     * @param event bot startup
+     * @param event new events before bot startup
      */
     @Override
     public void onReady(@Nonnull ReadyEvent event) {
         super.onReady(event);
         censorshipFilter.censoring(event);
+        expSystem.getXpAfterStartup(event);
     }
 
     /**
@@ -47,6 +53,7 @@ public class MessageListener extends ListenerAdapter {
      */
     @Override
     public void onMessageReceived(@Nonnull MessageReceivedEvent event) {
+        log.info("Bot received message: {}", event.getMessage().toString());
         try {
             if (censorshipFilter.hasBadWords(event.getMessage().getContentRaw().toLowerCase())) {
                 event.getMessage().delete().submit();
@@ -54,6 +61,9 @@ public class MessageListener extends ListenerAdapter {
                         + event.getAuthor().getAsTag() + " deleted because it contains bad words.").submit();
             } else if (filter.isCommand(event.getMessage().getContentRaw()))
                 filter.execute(event);
+            else if (expSystem.canGetXp(event.getAuthor()) & (event.getAuthor().getIdLong() != getBOT_ID())) {
+                expSystem.updateXp(event.getAuthor());
+            }
         } catch (Exception e) {
             log.warn("Exception: ", e);
             if (debugMode) {

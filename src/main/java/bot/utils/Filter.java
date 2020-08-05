@@ -9,7 +9,6 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -44,10 +43,9 @@ public class Filter {
      */
     public void execute(MessageReceivedEvent event) throws Exception {
         String rawMessage = event.getMessage().getContentRaw().trim();
-        log.info("Bot received message: {}", event.getMessage().toString());
-
-        String coreCommand = rawMessage.split("\\s")[0].toLowerCase(Locale.ENGLISH);
+        String coreCommand = rawMessage.split("\\s")[0].toLowerCase();
         Class<? extends CommandHandler<? extends Command>> commandClass = handlerType.get(coreCommand);
+        log.info("Bot parsed message into : {}", commandClass);
         if (commandClass == null) {
             log.warn("Invalid command");
             throw new InvalidCommandException("Invalid command");

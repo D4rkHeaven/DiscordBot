@@ -16,6 +16,8 @@
         <logback-classic.version>1.2.3</logback-classic.version>
 
         <jda.version>4.2.0_177</jda.version>
+
+        <jackson.version>2.11.2</jackson.version>
         <!--plugin-->
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
     </properties>
@@ -37,6 +39,12 @@
             <groupId>net.dv8tion</groupId>
             <artifactId>JDA</artifactId>
             <version>${jda.version}</version>
+        </dependency>
+
+        <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-databind</artifactId>
+        <version>${jackson.version}</version>
         </dependency>
     </dependencies>
 

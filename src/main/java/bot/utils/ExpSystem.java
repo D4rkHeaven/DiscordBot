@@ -1,6 +1,8 @@
 package bot.utils;
 
 import bot.listeners.MessageListener;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.entities.Message;
@@ -9,6 +11,7 @@ import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.*;
@@ -21,18 +24,30 @@ public class ExpSystem extends ListenerAdapter {
     @Setter
     private Integer expTimer;
 
+    private ObjectMapper mapper;
+    private File json;
+
     //TODO сделать инициализацию мап (в конструкторе?), чтобы не выкидывалось NPE при запуске без новых сообщений
     public ExpSystem() {
+        json = new File("src/main/resources/exp.json");
+        mapper = new ObjectMapper();
         loadTime();
+        loadJson();
     }
 
     public int getUserXp(User user) {
+
         return userXp.get(user);
     }
 
     public void setUserXp(User user, int xp) {
-        log.info("User {} have {} xp", user, xp);
-        userXp.put(user, xp);
+        try {
+            log.info("User {} have {} xp", user, xp);
+            userXp.put(user, xp);
+            mapper.writeValue(json, userXp);
+        } catch (IOException e) {
+            log.warn("Exception: ", e);
+        }
     }
 
     public int getUserTime(User user) {
@@ -91,7 +106,7 @@ public class ExpSystem extends ListenerAdapter {
         userXpMap.forEach((user, messages) -> {
             setUserXp(user, (int) Math.pow(messages.size(), 3));
             if (getUserXp(user) != 0)
-                textChannel.sendMessage("User " + user.getName() + " received " + getUserXp(user) + " xp.").submit();
+                textChannel.sendMessage("User " + user.getName() + " have " + getUserXp(user) + " xp.").submit();
         });
     }
 
@@ -103,6 +118,18 @@ public class ExpSystem extends ListenerAdapter {
         } catch (IOException e) {
             log.error("Properties file not found!");
             e.printStackTrace();
+        }
+    }
+
+    private void loadJson() {
+        try {
+         //   SimpleModule simpleModule = new SimpleModule();
+         //   simpleModule.addKeyDeserializer(User.class, new UserKeyDeserializer());
+         //   mapper.registerModule(simpleModule);
+            userXp = mapper.readValue(json, new TypeReference<>() {});
+            log.info(String.valueOf(userXp));
+        } catch (IOException e) {
+            log.warn("Exception: ", e);
         }
     }
 }

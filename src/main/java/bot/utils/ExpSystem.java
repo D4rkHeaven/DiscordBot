@@ -1,6 +1,7 @@
 package bot.utils;
 
 import bot.listeners.MessageListener;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
@@ -8,6 +9,8 @@ import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -15,10 +18,12 @@ import java.util.stream.Collectors;
 public class ExpSystem extends ListenerAdapter {
     HashMap<User, Integer> userXp = new HashMap<>();
     HashMap<User, Integer> userTime = new HashMap<>();
+    @Setter
+    private Integer expTimer;
 
     //TODO сделать инициализацию мап (в конструкторе?), чтобы не выкидывалось NPE при запуске без новых сообщений
     public ExpSystem() {
-
+        loadTime();
     }
 
     public int getUserXp(User user) {
@@ -45,7 +50,7 @@ public class ExpSystem extends ListenerAdapter {
      */
     public void updateXp(User user) {
         setUserXp(user, (int) Math.pow(Math.pow(Math.E, Math.log(getUserXp(user)) / 3) + 1, 3));
-        setUserTime(user, 15);
+        setUserTime(user, expTimer);
         startTimer();
     }
 
@@ -88,5 +93,16 @@ public class ExpSystem extends ListenerAdapter {
             if (getUserXp(user) != 0)
                 textChannel.sendMessage("User " + user.getName() + " received " + getUserXp(user) + " xp.").submit();
         });
+    }
+
+    private void loadTime() {
+        try (FileInputStream file = new FileInputStream("src/main/resources/config.properties")) {
+            Properties property = new Properties();
+            property.load(file);
+            expTimer = Integer.parseInt(property.getProperty("exp.timer"));
+        } catch (IOException e) {
+            log.error("Properties file not found!");
+            e.printStackTrace();
+        }
     }
 }

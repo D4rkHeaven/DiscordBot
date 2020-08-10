@@ -7,14 +7,10 @@ import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.ReadyEvent;
 
-import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -64,18 +60,19 @@ public class CensorshipFilter {
     }
 
     /**
-     * Parse "censor.txt" in resources package to set of strings
+     * Parse bad words from properties file
      */
     private void getBadWords() {
-        try (BufferedReader reader = new BufferedReader(
-                new InputStreamReader(new FileInputStream("src/main/resources/censor.txt"), StandardCharsets.UTF_8))) {
-            String word;
-            while ((word = reader.readLine()) != null) {
+        try (InputStreamReader stream = new InputStreamReader(new FileInputStream("src/main/resources/config.properties"), StandardCharsets.UTF_8)) {
+            Properties property = new Properties();
+            property.load(stream);
+            String[] words = property.getProperty("censor").split(",");
+            for (String word : words) {
                 if (!word.isEmpty())
                     badWords.add(word);
             }
-        } catch (final Exception ex) {
-            log.warn("Censorship filter disabled. File 'censor.txt' not found");
+        } catch (Exception e) {
+            log.warn("Censorship filter disabled. Bad words list not found", e);
         }
     }
 }

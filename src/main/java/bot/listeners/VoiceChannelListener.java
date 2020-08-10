@@ -67,7 +67,6 @@ public class VoiceChannelListener extends ListenerAdapter implements Runnable {
 
     @Override
     public void onGuildVoiceJoin(@Nonnull GuildVoiceJoinEvent event) {
-        log.warn("test");
         createVoiceChannel();
     }
 
